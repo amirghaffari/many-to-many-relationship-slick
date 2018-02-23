@@ -1,0 +1,110 @@
+@*(books:Seq[Book], pageIndex: Int, pageSize:Int)(implicit request: MessagesRequestHeader)
+*@
+@(currentPage: Page[Book], currentOrderBy: Int, currentFilter: String)(implicit request: MessagesRequestHeader)
+
+@import helper._
+
+	@****************************************
+	* Helper generating authors modal forms    *
+	****************************************@
+@getAuthor(book:Book) = @{
+	var authorsStr:String="<b>Book:</b> "+book.name+"</br> <b>Authors:</b></br><ul>"
+	book.authors.map(author=> authorsStr=authorsStr.concat("<li>"+author.name+" </li> "))
+	authorsStr=authorsStr.concat("</ul>")
+	if(book.authors.isEmpty) ""
+	else if (book.authors.length==1) book.authors(0).name
+	else book.authors(0).name +" &amp; more <a onclick=\"modalForm('"+authorsStr+"',''); return false;\" href=\"#\"><img border=\"0\" alt=\"more\" src=\""+routes.Assets.versioned("images/more.png")+"\" width=\"20\" height=\"20\"> </a>"
+}
+
+@isAvailable(book:Book) = @{
+	book.member.getOrElse("<span style=\"color:green\">available</span>")
+}
+
+@****************************************
+* Helper generating navigation links    *
+****************************************@
+@link(newPage: Int, newOrderBy: Option[Int] = None) = @{
+	routes.BookController.getBooks(newPage, newOrderBy.map { orderBy =>
+		if(orderBy == scala.math.abs(currentOrderBy)) -currentOrderBy else orderBy
+	}.getOrElse(currentOrderBy), currentFilter)
+
+}
+
+@**********************************
+* Helper generating table headers *
+***********************************@
+@header(orderBy: Int, title: String) = {
+	<th class="col@orderBy header ">
+		<a href="@link(0, Some(orderBy))">@title <span class="@if(scala.math.abs(currentOrderBy) == orderBy) { @{if(currentOrderBy < 0) "glyphicon glyphicon-triangle-top" else "glyphicon glyphicon-triangle-bottom"} }"></span></a>
+	</th>
+}
+
+@main("Library search engine") {
+
+	<h1>Library Search Engine</h1>
+
+	<div id="searchPanel" class="row">
+	@form(action=routes.BookController.getBooks()) {
+		<div class="col-sm-8 col-md-6 col-xs-10 col-lg-4">
+			<div class="input-group">
+				<input type="search" id="searchbox" name="f" value="@currentFilter" class="form-control" placeholder="Search for a book ...">
+				<div class="input-group-btn">
+					<input type="submit" class="btn btn-primary" id="searchsubmit" value="Filter by book name">
+				</div>
+			</div>
+		</div>
+		}
+	</div>
+
+	<div class="table-responsive">
+		<table class="table table-striped table-bordered">
+			<thead>
+				<tr>
+					@header(1, "book")
+					@header(2, "publish date")
+					<th class="header">authors</th>
+					@header(3, "borrower")
+				</tr>
+			</thead>
+			<tbody>
+			@currentPage.items.map { book: Book =>
+				<tr>
+					<td>@book.name</td>
+					<td>@book.publishDate</td>
+					<td>@Html(getAuthor(book))</td>
+					<td>@Html(isAvailable(book))</td>
+				</tr>
+			}
+			</tbody>
+		</table>
+
+	</div>
+
+	<div class="rightAlight">
+		<ul class="paging">
+			@currentPage.prev.map { page =>
+			<li>
+				<a class="paging previous" href="@link(page)">&larr; Previous</a>
+			</li>
+			}.getOrElse {
+				<li >
+					<a class="paging previous disabled">&larr; Previous</a>
+				</li>
+			}
+			<li>
+				<a>Displaying @(currentPage.pageOffset + 1) to @(currentPage.pageOffset + currentPage.items.size) of @currentPage.total</a>
+			</li>
+			@currentPage.next.map { page =>
+			<li>
+				<a class="paging next" href="@link(page)">Next &rarr;</a>
+			</li>
+			}.getOrElse {
+				<li >
+					<a class="paging next disabled">Next &rarr;</a>
+				</li>
+			}
+		</ul>
+	</div>
+
+}
+

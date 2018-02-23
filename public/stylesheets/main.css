@@ -1,0 +1,42 @@
+html {
+    background: #ffffff;
+}
+
+a.paging {
+    text-decoration: none;
+    display: inline-block;
+    padding: 8px 16px;
+}
+
+a.paging:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.previous {
+    background-color: #f1f1f1;
+    color: black;
+}
+
+.next {
+    background-color: #4CAF50;
+    color: white;
+}
+
+ul.paging li {
+    display: inline-block;
+    padding-right: 10px;
+
+}
+
+.rightAlight{
+    float: right;
+}
+
+#searchBook{
+    max-width:200px;
+}
+
+#searchPanel{
+    padding: 20px 0px 10px 0px;
+}
