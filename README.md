@@ -1,6 +1,12 @@
 Many-to-many relationship with Slick in Play Framework.
 -----------
 
+Why Play?
+..*Asynchronous and non-blocking IO
+..*Stateless (holds no server-side state), so easier scales horizontally
+..*Containerless (no need to servers such as Tomcat, GlassFish, or WebLogic) and easy to compile, run, and deploy
+..*Automatic reloading of code changes
+
 This example illustrates how to implement a many-to-many relationship with [Slick](https://www.playframework.com/documentation/2.6.x/PlaySlick) in [Play Framework](https://www.playframework.com).
 
 This implements a library search engine by employing Bootstrap, Play Framework, and Slick. The following data model is developed in the H2 Database Engine using [evolution scripts](https://www.playframework.com/documentation/2.6.x/Evolutions).
