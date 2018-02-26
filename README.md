@@ -8,6 +8,8 @@ Many-to-many relationship with Slick in Play Framework.
 - Containerless (no need to servers such as Tomcat, GlassFish, or WebLogic) and easy to compile, run, and deploy
 - Automatic reloading of code changes
 
+Stateless server applications scale better because no state needs to be maintained between requests, and resources can be released quickly. Also, instead of one application server, there can be multiple stateless application servers, and the user requests could go to different servers. This also improves reliability because if a server fails, the other application servers can handle the requests.
+
 This example illustrates how to implement a many-to-many relationship with [Slick](https://www.playframework.com/documentation/2.6.x/PlaySlick) in [Play Framework](https://www.playframework.com).
 
 This implements a library search engine by employing Bootstrap, Play Framework, and Slick. The following data model is developed in the H2 Database Engine using [evolution scripts](https://www.playframework.com/documentation/2.6.x/Evolutions).
