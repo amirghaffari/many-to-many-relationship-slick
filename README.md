@@ -32,3 +32,5 @@ Use the following commands to run the application:
 You will see a landing page as below:
 
 ![Landing page](https://github.com/amirghaffari/many-to-many-relationship-slick/blob/master/landing-page.png "Landing page")
+
+To package for production mode, run `sbt dist` to create a ZIP file in the `target\universal` folder. There are executables in the `bin` folder in the ZIP to start the server.

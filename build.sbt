@@ -1,4 +1,4 @@
-name := """play-scala-slick-example"""
+name := """many-to-many-relationship-slick"""
 
 version := "2.6.x"
 
