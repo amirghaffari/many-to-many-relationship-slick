@@ -22,7 +22,7 @@ case class Page[A](items: Seq[A], pageIndex: Int, pageOffset: Int, total: Int) {
  * @param dbConfigProvider The Play db config provider. Play will inject this for you.
  */
 @Singleton
-class BookRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(implicit ec: ExecutionContext) {
+class BookRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(implicit ec: DatabaseExecutionContext) {
   // We want the JdbcProfile for this provider
   private val dbConfig = dbConfigProvider.get[JdbcProfile]
 
