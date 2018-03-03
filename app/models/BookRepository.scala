@@ -20,6 +20,7 @@ case class Page[A](items: Seq[A], pageIndex: Int, pageOffset: Int, total: Int) {
  * A repository for Books.
  *
  * @param dbConfigProvider The Play db config provider. Play will inject this for you.
+  * delegating the database call to DatabaseExecutionContext
  */
 @Singleton
 class BookRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(implicit ec: DatabaseExecutionContext) {
