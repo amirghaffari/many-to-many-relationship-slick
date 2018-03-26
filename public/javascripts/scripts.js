@@ -1,31 +1,17 @@
 
-    function modalConfirmation(link, text)
+    function modalForm( title, body)
     {
-        document.getElementById('confirmation_message').innerHTML = text;
-        $("#confirmationDialog").dialog({
-            buttons : {
-                "Yes" : function() {
-                    $(this).dialog("close");
-                    window.location = link.href;
-                },
-                "No" : function() {
-                    $(this).dialog("close");
-                }
-            }
-        });
-        $("#confirmationDialog").dialog("open");
+        document.getElementById('title_text').innerHTML = title;
+        document.getElementById('body_text').innerHTML = body;
     }
 
-    function modalForm( text, title)
-    {
-        document.getElementById('info_message').innerHTML = text;
-        document.getElementById('infoDialog').title = title;
-        $("#infoDialog").dialog({
-            buttons : {
-                "OK" : function() {
-                    $(this).dialog("close");
-                }
-            }
+    $(document).ready(function(){
+        $(".infoModal").click(function(){
+            modalForm( this.getAttribute("data-modalTitle"), this.getAttribute("data-modalBody"))
         });
-        $("#infoDialog").dialog("open");
-    }
+
+        $("#loginBtn").click(function(){
+            $("#loginForm").submit()
+        });
+    });
+

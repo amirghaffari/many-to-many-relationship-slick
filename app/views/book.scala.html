@@ -1,6 +1,4 @@
-@*(books:Seq[Book], pageIndex: Int, pageSize:Int)(implicit request: MessagesRequestHeader)
-*@
-@(currentPage: Page[Book], currentOrderBy: Int, currentFilter: String)(implicit request: MessagesRequestHeader)
+@(currentPage: Page[Book], currentOrderBy: Int, currentFilter: String, userForm: Form[UserData])(implicit request: MessagesRequestHeader)
 
 @import helper._
 
@@ -13,7 +11,7 @@
 	authorsStr=authorsStr.concat("</ul>")
 	if(book.authors.isEmpty) ""
 	else if (book.authors.length==1) book.authors(0).name
-	else book.authors(0).name +" &amp; more <a onclick=\"modalForm('"+authorsStr+"',''); return false;\" href=\"#\"><img border=\"0\" alt=\"more\" src=\""+routes.Assets.versioned("images/more.png")+"\" width=\"20\" height=\"20\"> </a>"
+	else book.authors(0).name +" &amp; more <a class='infoModal' data-toggle=\"modal\" data-target=\"#infoModal\" data-modalTitle='Information' data-modalBody='"+authorsStr+"' href=\"#\"><img border=\"0\" alt=\"more\" src=\""+routes.Assets.versioned("images/more.png")+"\" width=\"20\" height=\"20\"> </a>"
 }
 
 @isAvailable(book:Book) = @{
@@ -39,9 +37,32 @@
 	</th>
 }
 
-@main("Library search engine") {
+@main("Library search engine", userForm) {
 
 	<h1>Library Search Engine</h1>
+
+	@* Flash shows updates to a page *@
+
+	@request.flash.get("success").map { message =>
+		<div class="alert alert-success">
+			@message
+		</div>
+	}
+
+	@request.flash.get("failure").map { message =>
+		<div class="alert alert-danger">
+			@message
+		</div>
+	}
+
+	@if(userForm.hasGlobalErrors) {
+		<ul class="alert alert-danger">
+		@for(error <- userForm.globalErrors) {
+			<li> @error.format </li>
+		}
+		</ul>
+	}
+
 
 	<div id="searchPanel" class="row">
 	@form(action=routes.BookController.getBooks()) {

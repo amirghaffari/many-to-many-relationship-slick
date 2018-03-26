@@ -40,3 +40,15 @@ ul.paging li {
 #searchPanel{
     padding: 20px 0px 10px 0px;
 }
+
+#searchsubmit{
+    margin-left: 5px;
+}
+
+#loginModalDialog{
+    max-width: 400px;
+}
+
+#log_in_out{
+    margin: 10px 10px 0 0;
+}
