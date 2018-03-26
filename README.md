@@ -4,7 +4,7 @@ Many-to-many relationship with Slick in Play Framework.
 ### Why Play?
 
 - Asynchronous and non-blocking IO
-- Stateless servers hold no server-side state, so they scales better horizontally
+- Stateless servers hold no server-side state, so they scale better horizontally
 - Containerless (no need to servers such as Tomcat, GlassFish, or WebLogic), so easy to compile, run, and deploy
 - Automatic reloading of code changes
 
@@ -14,7 +14,7 @@ However, realistically, an application cannot be completely stateless and needs 
 This example illustrates how to implement a many-to-many relationship with [Slick](https://www.playframework.com/documentation/2.6.x/PlaySlick) in [Play Framework](https://www.playframework.com).
 
 This application is a library search engine developed in Bootstrap, Play Framework, and Slick. The following data model is implemented in the H2 Database Engine using [evolution scripts](https://www.playframework.com/documentation/2.6.x/Evolutions).
-The application provides paging, filtering, and sorting functionalities. 
+The application provides paging, filtering, sorting, and authentication functionalities. 
 
 Database calls are blocking and wrapping them in Futures does not make them non-blocking. Futures only makes them run in a different thread. All actions in Play Framework use the default thread pool. Thus, this example uses another thread pool (`database.dispatcher`) for database calls.
 
